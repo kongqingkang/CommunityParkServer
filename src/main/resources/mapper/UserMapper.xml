@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.User">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table `user`-->
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="identify_flag" jdbcType="INTEGER" property="identifyFlag" />
+    <result column="mobile_flag" jdbcType="INTEGER" property="mobileFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    user_id, `status`, login_time, login_ip, identify_flag, mobile_flag
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `user`
+    (user_id, `status`, login_time, login_ip, identify_flag, mobile_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}, #{item.loginTime,jdbcType=TIMESTAMP}, 
+        #{item.loginIp,jdbcType=VARCHAR}, #{item.identifyFlag,jdbcType=INTEGER}, #{item.mobileFlag,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.User">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `user`
+    (user_id, `status`, login_time, login_ip, identify_flag, mobile_flag)
+    values
+    (#{userId,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, 
+      #{loginIp,jdbcType=VARCHAR}, #{identifyFlag,jdbcType=INTEGER}, #{mobileFlag,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    user_id = #{userId,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}, 
+    login_time = #{loginTime,jdbcType=TIMESTAMP}, 
+    login_ip = #{loginIp,jdbcType=VARCHAR}, 
+    identify_flag = #{identifyFlag,jdbcType=INTEGER}, 
+    mobile_flag = #{mobileFlag,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.User">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `user`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="loginTime != null">
+        login_time,
+      </if>
+      <if test="loginIp != null">
+        login_ip,
+      </if>
+      <if test="identifyFlag != null">
+        identify_flag,
+      </if>
+      <if test="mobileFlag != null">
+        mobile_flag,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyFlag != null">
+        #{identifyFlag,jdbcType=INTEGER},
+      </if>
+      <if test="mobileFlag != null">
+        #{mobileFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null">
+        login_time = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyFlag != null">
+        identify_flag = #{identifyFlag,jdbcType=INTEGER},
+      </if>
+      <if test="mobileFlag != null">
+        mobile_flag = #{mobileFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectMobileFlagById" resultType="cn.kqk.community_park.bean.User">
+    select identify_flag from user where user_id='c1a21bec61144f04b00ecb633bb5f03e' limit 1;
+  </select>
+  <update id="updateIdentifyFlagById" parameterType="cn.kqk.community_park.bean.User">
+    update user set identify_flag =#{identifyFlag} where user_id=#{userId};
+  </update>
+  <select id="selectUserId" resultType="cn.kqk.community_park.bean.User">
+    select * from user u where u.user_id=#{user_id};
+  </select>
+    <select id="selectUserAccount" resultType="int">
+      select count(*) from user;
+    </select>
+  <select id="findUser" resultType="cn.kqk.community_park.bean.dto.UserListDTO">
+    select ur.truth_name,u.user_id,ur.mobile,ur.identity_card,u.login_time,u.status,u.identify_flag from user u,user_review ur where u.user_id=ur.applyer
+  </select>
+  <update id="updateStatusByUserId">
+    update user set status=#{status} where user_id=#{userId};
+  </update>
+  <update id="updateIdentifyFlagByIdAndNumber">
+    update user set identify_flag=#{identifyFlag} where user_id=#{userId};
+  </update>
+</mapper>

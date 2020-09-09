@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>车位管理</title><!--  -----------------   这是 ------------------------        -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="/CommunityPark/css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--导航-->
+<nav th:replace="admin/_fragments::menu(4)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">后台管理</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="address book outline icon"></i>用户管理</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="address card outline icon"></i>审核</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="car icon"></i>车位管理</a>
+            <div class="right m-item item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="https://unsplash.it/100/100?image=1006" alt="" class="ui avatar image">
+                        孔庆康
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--中间-->
+<div class="ui container" style="padding-top: 20px">
+    <div class="ui hidden divider"></div>
+<!--    <div class="ui form">-->
+<!--        <div class="three fields">-->
+<!--            <div class="field"></div>-->
+<!--            <div class="field"></div>-->
+<!--            <div class="field">-->
+<!--                <div class="ui selection dropdown">-->
+<!--                    <input type="hidden" name="gender">-->
+<!--                    <i class="dropdown icon"></i>-->
+<!--                    <div class="default text">Gender</div>-->
+<!--                    <div class="menu">-->
+<!--                        <div class="item" data-value="1">姓名</div>-->
+<!--                        <div class="item" data-value="0">审核状态</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="field">-->
+<!--                <div class="ui icon input">-->
+<!--                    <input type="text" placeholder="搜索...">-->
+<!--                    <i class="inverted circular search link icon"></i>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <table class="ui teal center aligned selectable celled striped table">
+        <thead>
+            <tr>
+                <th>所有人姓名</th>
+                <th>联系方式</th>
+                <th>所属社区</th>
+                <th>车位地址</th>
+                <th>车位号</th>
+                <th>认证状态</th>
+                <th>是否租出</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="RentOutInfoContent">
+<!--        <tr  class="positive">-->
+<!--            <td>孔庆康</td>-->
+<!--            <td>17768227869</td>-->
+<!--            <td>盐城工学院</td>-->
+<!--            <td>江苏省盐城市亭湖区希望大道一号盐城工学院新校区停车场B1</td>-->
+<!--            <td>a103</td>-->
+<!--            <td>通过</td>-->
+<!--            <td>已出租</td>-->
+<!--            <td>-->
+<!--                <a href="#" class="ui mini red basic button">封禁</a>-->
+<!--                <a href="#" class="ui mini teal basic button">解封</a>-->
+<!--            </td>-->
+<!--        </tr>-->
+        </tbody>
+        <tfoot>
+        <tr>
+            <th colspan="8">
+                <div id="pageContainer" class="ui right aligned bottom attached segment">
+                    <a id="upPage" href="javascript:void(0);" class="ui mini teal basic button">上一页</a>
+                    <a id="downPage" href="javascript:void(0);" class="ui mini teal basic button">下一页</a>
+                </div>
+            </th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+<!--底部-->
+<footer th:replace="_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid"><!--stackable代表可堆叠-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 7em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">最新发布</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">Email:1170830826@qq.com</a>
+                    <a href="#" class="item">QQ:1170830826</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">车位平台</h4>
+                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">致力于打造一个非常好的社区车位共享平台，为大家带来优质的服务！</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="/CommunityPark/js/adminInfo.js"></script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('.ui.radio.checkbox')
+        .checkbox()
+    ;
+    var pageNum = 1;//当前页
+    //------------------111111111111111111-------------------
+    $(document).ready(function(){
+        getAllParkInfo(pageNum);
+        init();
+    });
+
+    //--------------2222222222222222222----------------------------------
+    //点击上一页
+    $("#upPage").click(function(){
+        if(pageNum==1){
+            $("#upPage").hide();
+        }
+        if(pageNum>1){
+            pageNum-- ;
+            $('#RentOutInfoContent').empty();
+            $("#upPage").show();
+            getAllParkInfo(pageNum);
+        }
+    });
+    //下一页
+    $("#downPage").click(function(){
+        pageNum++ ;
+        $('#RentOutInfoContent').empty();
+        $("#upPage").show();
+        getAllParkInfo(pageNum);
+    });
+    /**
+     * 后台-实名认证审核
+     * @param pageNum
+     */
+    function getAllParkInfo(pageNum){
+        if(pageNum==1){
+            $("#upPage").hide();
+            $("#downPage").show();
+        }
+        var data = {
+            pageNum :pageNum,
+            pageSize :2
+        }
+        $.ajax({
+            type: "POST",
+            async : false,
+            serializeForm: true,
+            url:"parkList",
+            contentType:"application/json;charset=UTF-8",
+            data:JSON.stringify(data),
+            dataType: "json",
+            success:function (res) {
+                console.log(res);
+                var data = res.data;
+                if(data.hasPreviousPage==false){//如果是第一页
+                    $("#upPage").hide();
+                    $("#downPage").show();
+                }else{//不是
+                    $("#upPage").show();
+                    $("#downPage").show();
+                }
+                if(data.hasNextPage==false){//如果是最后一页
+                    $("#upPage").show();
+                    $("#downPage").hide();
+                }else{//不是
+                    $("#upPage").show();
+                    $("#downPage").show();
+                }
+                var temp="";
+                for(var i =0; i <data.total ; i ++) {
+                    var flag =data.list[i].identifyFlag==0?'':(data.list[i].identifyFlag==1?'checkmark':'close');
+                    var tableStatus =data.list[i].identifyFlag==0?'':(data.list[i].identifyFlag==1?'positive':'negative');
+                    var iFlag =data.list[i].identifyFlag==0?'待审核':(data.list[i].identifyFlag==1?'通过':'未通过');
+
+                    var status =data.list[i].rentoutFlag==0?'未出租':(data.list[i].rentoutFlag==1?'已出租':'已删除/屏蔽');
+                    var flag1 =data.list[i].rentoutFlag==0?'':(data.list[i].rentoutFlag==1?'checkmark':'close');
+                    var tableStatus1 =data.list[i].rentoutFlag==0?'':(data.list[i].rentoutFlag==1?'positive':'negative');
+
+                    temp=$('<tr class="'+tableStatus1+'">\n' +
+                        '            <td>'+data.list[i].ownerName+'</td>\n' +
+                        '            <td>'+data.list[i].mobile+'</td>\n' +
+                        '            <td>'+data.list[i].communityName+'</td>\n' +
+                        '            <td>'+data.list[i].location+'</td>\n' +
+                        '            <td>'+data.list[i].parkName+'</td>\n' +
+                        '            <td class="'+tableStatus+'">\n' +
+                        '                <i class="icon '+flag+'"></i>'+iFlag+'\n' +
+                        '            </td>\n' +
+                        '            <td class="'+tableStatus1+'">\n' +
+                        '                <i class="icon '+flag1+'"></i>'+status+'\n' +
+                        '            </td>\n' +
+                        '            <td>\n' +
+                        '                <a href="javascript:void(0)" class="ui mini red basic button" onclick=parkBlock("'+data.list[i].parkId+'")>封禁</a>\n' +
+                        '                <a href="javascript:void(0)" class="ui mini teal basic button" onclick=parkUnBlock("'+data.list[i].parkId+'")>解封</a>\n' +
+                        '            </td>\n' +
+                        '        </tr>');
+                    $('#RentOutInfoContent').append(temp);
+                }
+            }
+        });
+    }
+
+    function parkBlock(parkId){
+        $.ajax({
+            type: "POST",
+            sync : false,
+            serializeForm: true,
+            url: "adminLockPark/"+parkId,
+            contentType:"application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (res) {
+                if (res.code==0){
+                    alert("封禁成功！");
+                }
+                if (res.code==10){
+                    alert(res.msg);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+        });
+    }
+
+    function parkUnBlock(parkId){
+        $.ajax({
+            type: "POST",
+            sync : false,
+            serializeForm: true,
+            url: "adminUnLockPark/"+parkId,
+            contentType:"application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (res) {
+                if (res.code==0){
+                    alert("解封成功！");
+                }
+                if (res.code==11){
+                    alert(res.msg);
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+        });
+    }
+</script>
+</body>
+</html>

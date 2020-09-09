@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>管理后台</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="/CommunityPark/css/me.css">
+</head>
+<body>
+<!--导航-->
+<nav th:replace="admin/_fragments::menu(1)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">后台管理</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="address book outline icon"></i>用户管理</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="address card outline icon"></i>审核</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="car icon"></i>车位管理</a>
+            <div class="right m-item item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="https://unsplash.it/100/100?image=1006" alt="" class="ui avatar image">
+                        孔庆康
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--中间-->
+<div class="m-container-small m-padded-tb-large">
+    <div class="ui center aligned container">
+        <div class="ui message transition">
+            <i class="close icon"></i>
+            <div class="ui huge header">欢迎回来！ </div>
+            <span>管理员:</span><span  style="padding-left: 10px" id="truthName1"></span>
+        </div>
+<!--        <img src="https://unsplash.it/800/400?image=24" alt="" class="ui rounded bordered fluid image">-->
+    </div>
+    <div class="ui hidden divider"></div>
+    <div class="ui basic attached segment">
+        <div class="ui huge statistics" style="padding-left: 100px">
+            <div class="orange statistic">
+                <div class="value" id="totalUser">
+                </div>
+                <div class="label" style="font-size: 24px;"><i class="user plus icon"></i>用户总数</div>
+            </div>
+            <div class="olive statistic">
+                <div class="value" id="todayAdd">
+                </div>
+                <div class="label" style="font-size: 24px;"><i class="plus icon"></i>当月信息增长 </div>
+            </div>
+            <div class="violet statistic">
+                <div class="value" id="freePark">
+                </div>
+                <div class="label" style="font-size: 24px;"><i class="exclamation icon"></i>空余车位数 </div>
+            </div>
+        </div>
+        <div class="ui hidden divider"></div><!--分割线-->
+        <h4 class="ui horizontal divider header"><i class="bar chart icon"></i> 数据统计 </h4>
+        <div class="ui large horizontal statistics" style="padding-left: 30px">
+            <div class="brown statistic">
+                <div class="label" style="font-size: 17px;"><i class="bullhorn icon"></i>求租信息 </div>
+                <div class="value" id="rentInfoTotal">
+                </div>
+            </div>
+            <div class="teal statistic">
+                <div class="label"  style="font-size: 17px;"><i class="bell icon"></i>出租信息 </div>
+                <div class="value" id="rentOutInfoTotal">
+                </div>
+            </div>
+            <div class="blue statistic">
+                <div class="label"  style="font-size: 17px;"><i class="envelope icon"></i>实名认证待审核数 </div>
+                <div class="value" id="noIdentify">
+                </div>
+            </div>
+            <div class="green statistic">
+                <div class="label"  style="font-size: 17px;"><i class="envelope icon"></i>车位认证待审核数 </div>
+                <div class="value" id="noParkIdentify">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--底部-->
+<footer th:replace="admin/_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid"><!--stackable代表可堆叠-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="/CommunityPark/images/wechat.jpg" class="ui rounded image" alt="" style="width: 7em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">最新博客</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">Email:1170830826@qq.com</a>
+                    <a href="#" class="item">QQ:1170830826</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">Blog</h4>
+                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">这是一个demo</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="/CommunityPark/js/adminInfo.js"></script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('.message .close')
+        .on('click', function() {
+            $(this)
+                .closest('.message')
+                .transition('fade')
+            ;
+        })
+    ;
+    $(document).ready(function(){
+        $.ajax({
+            type: "get",
+            sync : false,
+            serializeForm: true,
+            url: "getIndexInfo",
+            contentType:"application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (res) {
+                console.log(res.data);
+                var data = res.data;
+                $("#truthName1").text(data.truthName);
+                $("#totalUser").text(data.userTotal);
+                $("#todayAdd").text(data.todayAdd);
+                $("#freePark").text(data.freePark);
+                $("#rentInfoTotal").text(data.rentInfoTotal);
+                $("#rentOutInfoTotal").text(data.rentOutInfoTotal);
+                $("#noIdentify").text(data.noIdentify);
+                $("#noParkIdentify").text(data.noParkIdentify);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+        });
+        init();
+    });
+
+</script>
+</body>
+</html>

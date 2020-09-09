@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Permission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table permission-->
+    <id column="permission_id" jdbcType="VARCHAR" property="permissionId" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    permission_id, permission_name, `status`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="permission_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when permission_id = #{item.permissionId,jdbcType=VARCHAR} then #{item.permissionName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when permission_id = #{item.permissionId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where permission_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.permissionId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update permission
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="permission_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.permissionName != null">
+            when permission_id = #{item.permissionId,jdbcType=VARCHAR} then #{item.permissionName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when permission_id = #{item.permissionId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where permission_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.permissionId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into permission
+    (permission_id, permission_name, `status`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.permissionId,jdbcType=VARCHAR}, #{item.permissionName,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Permission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into permission
+    (permission_id, permission_name, `status`)
+    values
+    (#{permissionId,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    permission_id = #{permissionId,jdbcType=VARCHAR}, 
+    permission_name = #{permissionName,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Permission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id = #{permissionId,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

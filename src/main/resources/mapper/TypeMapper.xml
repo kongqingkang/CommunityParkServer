@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.TypeMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Type">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table `type`-->
+    <id column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="type_name" jdbcType="VARCHAR" property="typeName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    type_id, type_name
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update `type`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="type_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when type_id = #{item.typeId,jdbcType=VARCHAR} then #{item.typeName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where type_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.typeId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update `type`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="type_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.typeName != null">
+            when type_id = #{item.typeId,jdbcType=VARCHAR} then #{item.typeName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where type_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.typeId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `type`
+    (type_id, type_name)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.typeId,jdbcType=VARCHAR}, #{item.typeName,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Type">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `type`
+    (type_id, type_name)
+    values
+    (#{typeId,jdbcType=VARCHAR}, #{typeName,jdbcType=VARCHAR})
+    on duplicate key update 
+    type_id = #{typeId,jdbcType=VARCHAR}, 
+    type_name = #{typeName,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Type">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `type`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="typeName != null">
+        type_name,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null">
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

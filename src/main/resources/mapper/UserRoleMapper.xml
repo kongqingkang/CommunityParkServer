@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.UserRole">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table user_role-->
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    user_id, role_id
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_role
+    (user_id, role_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId,jdbcType=VARCHAR}, #{item.roleId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.UserRole">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_role
+    (user_id, role_id)
+    values
+    (#{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR})
+    on duplicate key update 
+    user_id = #{userId,jdbcType=VARCHAR}, 
+    role_id = #{roleId,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.UserRole">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="selectRoleIdByUserId" resultMap="BaseResultMap">
+      select * from user_role where user_id=#{userId};
+    </select>
+</mapper>

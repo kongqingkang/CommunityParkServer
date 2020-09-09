@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.RentParkMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.RentPark">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table rent_park-->
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="park_id" jdbcType="VARCHAR" property="parkId" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    user_id, park_id, start_time, end_time, `status`
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_park
+    (user_id, park_id, start_time, end_time, `status`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userId,jdbcType=VARCHAR}, #{item.parkId,jdbcType=VARCHAR}, #{item.startTime,jdbcType=TIMESTAMP}, 
+        #{item.endTime,jdbcType=TIMESTAMP}, #{item.status,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.RentPark">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_park
+    (user_id, park_id, start_time, end_time, `status`)
+    values
+    (#{userId,jdbcType=VARCHAR}, #{parkId,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER})
+    on duplicate key update 
+    user_id = #{userId,jdbcType=VARCHAR}, 
+    park_id = #{parkId,jdbcType=VARCHAR}, 
+    start_time = #{startTime,jdbcType=TIMESTAMP}, 
+    end_time = #{endTime,jdbcType=TIMESTAMP}, 
+    `status` = #{status,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.RentPark">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_park
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="parkId != null">
+        park_id,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null">
+        #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null">
+        park_id = #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

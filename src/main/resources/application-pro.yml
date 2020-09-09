@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/communitypark?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+mybatis:
+  type-aliases-package: com.ycit.communitypark.model
+  mapper-locations: classpath*:mapper/*.xml
+logging:
+  level:
+    root: warn
+    cn.ycit.communitypark: debug
+  file:
+    name: log/communitypark-pro.log
+server:
+  port: 8081

@@ -1,0 +1,14 @@
+##
+# spring配置
+##
+spring:
+  thymeleaf:
+    mode: HTML
+  profiles:
+    # 引入默认配置
+    include: default
+    active: dev
+
+  jmx:
+    # 指定jmx的默认名称，用于启动多个springboot项目时不会冲突
+    default-domain: oa_2020

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>注册</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="css/me.css">
+</head>
+<body>
+<div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+    <div class="ui container">
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui teal image header">
+                    <div class="content">
+                        用户注册
+                    </div>
+                </h2>
+                <form class="ui large form">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="user icon"></i>
+                                <input type="text" name="username" id="username" placeholder="请输入用户名">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" placeholder="请输入密码" id="password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="lock icon"></i>
+                                <input type="password" name="repassword" id="repassword" placeholder="请输入确认密码">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input">
+                                <i class="mobile alternate icon"></i>
+                                <input type="text" name="mobile" id="mobile" placeholder="请输入请输入手机号">
+                            </div>
+                        </div>
+                        <button class="ui fluid large teal button">注    册</button>
+                    </div>
+
+                    <div class="ui error message"></div>
+                    <!-- <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}">用户名或密码错误</div>-->
+                </form>
+                <div class="ui message">
+                    已经加入我们？ <a href="#" th:href="@{login}">登录</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/*/<th:block th:replace="_fragments::script">/*/-->
+<script src="js/jquery.serialize-object.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="https://github.com/macek/jquery-serialize-object"></script>
+<script src="dist/jquery.serialize-object.min.jst"></script>
+<script src="jquery.min.js"></script>
+<script src="jquery.serialize-object.min.js"></script>
+<!--/*/</th:block>/*/-->
+<script>
+    $('.ui.form').form({
+        fields: {
+            username: {
+                identifier: 'username',
+                rules: [{
+                    type: 'minLength[3]',
+                    prompt: '请输入用户名，至少三个字符!'
+                }]
+            },
+            password: {
+                identifier: 'password',
+                rules: [{
+                    type: 'empty',
+                    prompt: '密码必须包含大小写字母/数字/符号任意两者组合!'
+                    // regExp[/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)]|[\(\)])+$)([^(0-9a-zA-Z)]|[\(\)]|[a-z]|[A-Z]|[0-9]){6,}$/]
+                }]
+            },
+            repassword: {
+                identifier: 'repassword',
+                rules: [{
+                    type   : 'match[password]', //match[name属性值]
+                    prompt : '两次的密码必须一致'
+                }]
+            },
+            mobile: {
+                identifier: 'mobile',
+                rules: [{
+                    type: 'regExp[/^1(3|4|5|6|7|8|9)\\d{9}$/]',
+                    prompt: '请输入正确的手机号!'
+                }]
+            }
+        },
+        onSuccess: function(e) {
+            //阻止表单的提交
+            e.preventDefault();
+            var username= $('#username').val();
+            var password= $('#password').val();
+            var mobile= $('#mobile').val();
+            var data = {
+                account : username,
+                auth : password,
+                mobile : mobile
+            }
+            $.ajax({
+                type: "POST",
+                async : false,
+                serializeForm: true,
+                url: "register",
+                data:JSON.stringify(data),
+                contentType:"application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (res) {
+                    if (res.code==0){
+                        alert("注册成功！");
+                        window.location.href = "login";
+                    }
+                    else if(res.code==2){
+                        alert(res.msg);
+                    }else{
+                        alert(res.msg);
+                        alert("---注册失败！---");
+                        window.location.replace("reg");
+                    }
+                },
+                error:function (res) {
+                    console.log(res.msg);
+                    alert("---注册失败了---");
+                }
+            });
+        }
+     })
+    //$('.ui.form').form({
+    //     fields: {
+    //         username: {
+    //             identifier: 'username',
+    //             rules: [{
+    //                 type: 'minLength[3]',
+    //                 prompt: '请输入用户名，至少三个字符!'
+    //             }]
+    //         },
+    //         password: {
+    //             identifier: 'password',
+    //             rules: [{
+    //                 type: 'regExp[/^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?!([^(0-9a-zA-Z)]|[\\(\\)])+$)([^(0-9a-zA-Z)]|[\\(\\)]|[a-z]|[A-Z]|[0-9]){6,}$/]',
+    //                 prompt: '密码必须包含大小写字母/数字/符号任意两者组合!'
+    //             }]
+    //         },
+    //         repassword: {
+    //             identifier: 'repassword',
+    //             rules: [{
+    //                 type   : 'match[password]', //match[name属性值]
+    //                 prompt : '两次的密码必须一致'
+    //             }]
+    //         },
+    //         mobile: {
+    //             identifier: 'mobile',
+    //             rules: [{
+    //                 type: 'regExp[/^1(3|4|5|6|7|8|9)\\d{9}$/]',
+    //                 prompt: '请输入正确的手机号!'
+    //             }]
+    //         }
+    //     },
+    //     onSuccess:function(){
+    //         //var data = sessionStorage.getItem("Authorization")//获取数据
+    //         var username = document.getElementById('#username').value;
+    //         var password = document.getElementById('#password').value;
+    //         var mobile = document.getElementById('#mobile').value;
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "register",
+    //             // data:JSON.stringify(data),
+    //             data:{
+    //                 username : username,
+    //                 password : password,
+    //                 mobile : mobile
+    //             },
+    //             dataType: "json",
+    //             // headers:{
+    //             //     "Authorization":data
+    //             // },
+    //             success: function (res) {
+    //                 if (res.code==0){
+    //                     window.location.href = "login";
+    //                     alert("注册成功！")
+    //                 }else{
+    //                     alert("---注册失败！---");
+    //                     window.location.href = "register";
+    //                 }
+    //             },
+    //             error:function (res) {
+    //                 console.log(res.msg);
+    //                 alert("---注册失败了---");
+    //             }
+    //         });
+    //     }
+    // });
+
+    // function userRegister(){
+    //     //var data = sessionStorage.getItem("Authorization")//获取数据
+    //     var username = document.getElementById('#username').value;
+    //     var password = document.getElementById('#password').value;
+    //     var mobile = document.getElementById('#mobile').value;
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "register",
+    //         // data:JSON.stringify(data),
+    //         data:{
+    //             username : username,
+    //             password : password,
+    //             mobile : mobile
+    //         },
+    //         dataType: "json",
+    //         // headers:{
+    //         //     "Authorization":data
+    //         // },
+    //         success: function (res) {
+    //             if (res.code==0){
+    //                 window.location.href = "login";
+    //                 alert("注册成功！")
+    //             }else{
+    //                 alert("---注册失败！---");
+    //                 window.location.href = "register";
+    //             }
+    //         },
+    //         error:function (res) {
+    //             console.log(res.msg);
+    //             alert("---注册失败了---");
+    //         }
+    //     });
+    // }
+
+</script>
+</body>
+</html>

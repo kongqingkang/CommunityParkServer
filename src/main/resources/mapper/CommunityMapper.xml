@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.CommunityMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Community">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table community-->
+    <id column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
+    <result column="community_address" jdbcType="VARCHAR" property="communityAddress" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    community_id, community_name, community_address
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update community
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="community_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when community_id = #{item.communityId,jdbcType=VARCHAR} then #{item.communityName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="community_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when community_id = #{item.communityId,jdbcType=VARCHAR} then #{item.communityAddress,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where community_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.communityId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update community
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="community_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.communityName != null">
+            when community_id = #{item.communityId,jdbcType=VARCHAR} then #{item.communityName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="community_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.communityAddress != null">
+            when community_id = #{item.communityId,jdbcType=VARCHAR} then #{item.communityAddress,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where community_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.communityId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into community
+    (community_id, community_name, community_address)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.communityId,jdbcType=VARCHAR}, #{item.communityName,jdbcType=VARCHAR}, #{item.communityAddress,jdbcType=VARCHAR}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Community">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into community
+    (community_id, community_name, community_address)
+    values
+    (#{communityId,jdbcType=VARCHAR}, #{communityName,jdbcType=VARCHAR}, #{communityAddress,jdbcType=VARCHAR}
+      )
+    on duplicate key update 
+    community_id = #{communityId,jdbcType=VARCHAR}, 
+    community_name = #{communityName,jdbcType=VARCHAR}, 
+    community_address = #{communityAddress,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Community">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into community
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="communityName != null">
+        community_name,
+      </if>
+      <if test="communityAddress != null">
+        community_address,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityName != null">
+        #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddress != null">
+        #{communityAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="communityName != null">
+        community_name = #{communityName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityAddress != null">
+        community_address = #{communityAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectCommuityByCommunityName" resultType="cn.kqk.community_park.bean.Community">
+    select * from community where community_name=#{communityName} and community_address=#{communityAddress};
+  </select>
+
+  <select id="selectCommuityIdByCommunityName" resultType="cn.kqk.community_park.bean.Community">
+    select community_id from community where community_name=#{communityName};
+  </select>
+    <select id="selectCommunityInfoById" resultMap="BaseResultMap">
+      select * from community where community_id=#{communityId};
+    </select>
+</mapper>

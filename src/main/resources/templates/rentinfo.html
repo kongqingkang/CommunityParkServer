@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>求租信息详情</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="/CommunityPark/css/me.css">
+</head>
+<body>
+<!--导航-->
+<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">车位共享</h2>
+            <a th:href="@{/index}" href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a th:href="@{/getUserReview}" href="#" class="m-item item m-mobile-hide"><i class="tags icon"></i>认证</a>
+            <a th:href="@{/getRentInput}" href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>发布</a>
+            <a th:href="@{/archives}" href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a th:href="@{/about}" href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>个人信息</a>
+            <a th:href="@{/message}" href="#" class="m-item item m-mobile-hide"><i class="comment alternate outline icon"></i>消息</a>
+            <div class="right item m-mobile-hide">
+                <div id="search_box" class="ui icon inverted input transparent">
+                    <!--input要用th:value-->
+                    <input type="text" name="query" placeholder="Search..." id="query">
+                    <i class="search link icon"></i>
+                </div>
+                <div class="ui dropdown item" style="margin-left: 50px !important;">
+                    <div class="text">
+                        <img id="avatarUrl1" src="https://unsplash.it/100/100?image=1006" alt="" class="ui avatar image">
+                        <span id="truthName2"></span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" onclick=logoutA()>注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--中间-->
+<div id="waypoint" class="m-container-small m-padded-tb-large animated fadeIn">
+    <div class="ui middle aligned container">
+        <div class="ui top attached segment">
+            <div class="ui horizontal link list">
+                <div class="item">
+                    <img id="img_pre" src="" alt="" class="ui avatar image">
+                    <div class="content" id="truthName"><a href="#" class="header"></a></div>
+                </div>
+                <div class="item">
+                    <span><i class="calendar icon"></i></span><span id="publishTime"></span>
+                </div>
+                <div class="item">
+                    <span><i class="eye icon"></i></span><span id="views"></span>次
+                </div>
+            </div>
+        </div>
+        <div class="ui attached padded segment">
+            <!-- 内容-->
+            <form action="#" method="post" class="ui form">
+                <div class="ui right aligned basic segment">
+                    <div id="rentOutFlag" class="ui orange basic label">求租</div>
+                </div>
+                <h2 class="ui center aligned header" id="title"></h2>
+                <br>
+                <div id="content" class="m-padded-tb-large">
+                    <div>
+                        <div class="ui divided selection list">
+<!--                            <a class="item">-->
+<!--                                <div class="ui blue horizontal huge label">目的地址</div>-->
+<!--                                <span style="font-size:18px;color: black">江苏省盐城市亭湖区希望大道一号盐城工学院地下停车场B104</span>-->
+<!--                            </a>-->
+                            <a class="item">
+                                <div class="ui teal horizontal huge label">求租人</div>
+                                <span style="font-size:18px;color: black;padding-left: 22px" id="truthName1"></span>
+                            </a>
+                            <a class="item">
+                                <div class="ui orange horizontal huge label">联系电话</div>
+                                <span style="font-size:18px;color: black" id="mobile"></span>
+                            </a>
+<!--                            <a class="item">-->
+<!--                                <div class="ui teal horizontal huge label">微信/QQ</div>-->
+<!--                                <span style="font-size:18px;color: black;">1170830826</span>-->
+<!--                            </a>-->
+                            <a class="item">
+                                <div class="ui blue horizontal huge label">长/短租</div>
+                                <span style="font-size:18px;color: black;padding-left: 12px" id="longFlag"></span>
+                            </a>
+                            <a class="item">
+                                <div class="ui teal horizontal huge label">时间段</div>
+                                <span style="font-size:18px;color: black;padding-left: 22px" id="startTime"></span><span style="font-size:18px;color: black;padding-left: 22px;padding-right: 22px;">至</span><span id="endTime" style="font-size:18px;color: black;"></span>
+                            </a>
+                            <a class="item">
+                                <div class="ui teal horizontal huge label">开价</div>
+                                <span style="font-size:18px;color: black;padding-left: 38px" id="price"></span>
+                            </a>
+                            <a class="item">
+                                <div class="ui blue horizontal huge label">备注</div>
+                                <span style="font-size:18px;color: black;padding-left: 38px" id="description"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ui center aligned container" style="padding-top: 28px">
+                        <button id="reserverInfo" class="ui secondary button">预留</button><!--留给他人确认车位租赁-->
+                        <button id="editInfo" class="ui blue button">编辑</button>
+                        <button id="delInfo" class="ui gray button">删除</button>
+                        <button id="confirmGive" class="ui teal button">确认</button><!--本人确认-->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--弹出层-->
+<div class="ui basic del modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        删除该求租信息
+    </div>
+    <div class="content" style="text-align: center;">
+        <p style="font-size: 24px;">你确定删除吗?</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            再想想
+        </div>
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            我很确定
+        </div>
+    </div>
+</div>
+
+<div class="ui basic rent modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        预留该车位？
+    </div>
+    <div class="content" style="text-align: center;">
+        <p style="font-size: 24px;">你确定预留吗?</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            再想想
+        </div>
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            我很确定
+        </div>
+    </div>
+</div>
+
+<div class="ui basic rentOK modal">
+    <div class="ui icon header">
+        <i class="archive icon"></i>
+        确定租车位？
+    </div>
+    <div class="content" style="text-align: center;">
+        <p style="font-size: 24px;">你真的确定吗?</p>
+    </div>
+    <div class="actions">
+        <div class="ui red basic cancel inverted button">
+            <i class="remove icon"></i>
+            再想想
+        </div>
+        <div class="ui green ok inverted button">
+            <i class="checkmark icon"></i>
+            我很确定
+        </div>
+    </div>
+</div>
+<!--弹出层-->
+<div id="toolbar" class="m-padded m-fixed m-buttom-right" style="display: none">
+    <div class="ui vertical icon buttons">
+        <div id="toTop-Button" class="ui icon button"><i class="chevron up icon"></i></div>
+    </div>
+</div>
+<!--底部-->
+<footer th:replace="_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid"><!--stackable代表可堆叠-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 7em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">最新发布</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">Email:1170830826@qq.com</a>
+                    <a href="#" class="item">QQ:1170830826</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">车位平台</h4>
+                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">致力于打造一个非常好的社区车位共享平台，为大家带来优质的服务！</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="/CommunityPark/js/myInfo.js"></script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('#toTop-Button').click(function () {
+        $(window).scrollTo(0, 500);
+    });
+
+    /**
+     * 求租详情页获取数据
+     * @param id
+     */
+    $(document).ready(function(){
+        init();
+        var rentInfoId = window.location.pathname.split("/")[3];
+        //alert(rentInfoId)
+        $.ajax({
+            type: "get",
+            sync : false,
+            serializeForm: true,
+            url: "/CommunityPark/rentInfoDetail/"+rentInfoId,
+            // contentType:"application/json;charset=UTF-8",
+            // dataType: "json",
+            success: function (res) {
+                console.log(res);
+                var data = res.data;
+                if(data.typeId==0){
+                    $("#rentOutFlag").text("求租");
+                }
+                console.log(data.selfFlag)
+                $("#truthName").text(data.truthName);
+                $("#title").text(data.title);
+                $("#publishTime").text(data.publishTime);
+                $("#views").text(data.views);
+                $("#startTime").text(data.startTime);
+                $("#endTime").text(data.endTime);
+                $("#description").text(data.description);
+                $("#price").text(data.price);
+                $("#truthName1").text(data.truthName);
+                $("#mobile").text(data.mobile);
+                $("#img_pre").attr("src", data.avatarUrl);
+                alert(data.wantId);
+                if (data.wantId!=0){
+                    $("#reserverInfo").attr('disabled',true);
+                    $("#reserverInfo").text("已预留");
+                }
+                if (data.wantStatus==2){
+                    $("#confirmGive").attr('disabled',true);
+                    $("#confirmGive").text("已确认");
+                    $("#editInfo").attr('disabled',true);
+                    $("#editInfo").text("不可更改");
+                    $("#reserverInfo").attr('disabled',true);
+                    $("#reserverInfo").text("已确认，不可更改");
+                }
+                if (data.longFlag==0){
+                    $("#longFlag").text("长租");
+                }else{
+                    $("#longFlag").text("短租");
+                }
+                if(data.selfFlag!=1){//0的时候是别人
+                    $('#confirmGive').attr("style","display:none;");
+                    $('#editInfo').attr("style","display:none;");
+                    $('#delInfo').attr("style","display:none;");
+                    //$('#reserverInfo').attr("style","display:none;");
+                }else{
+                    $('#reserverInfo').attr("style","display:none;");
+                    $('#editInfo').show();
+                    $('#delInfo').show();
+                    $('#confirmGive').show();
+                }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+        });
+    });
+
+    /**
+     *
+     * 用户确认按钮点击事件，这是发布者做的
+     * */
+
+    $("#confirmGive").click(function(event){
+        event.preventDefault();
+        var rentInfoId = window.location.pathname.split("/")[3];
+        $(".ui.basic.rentOK.modal").modal({
+            onApprove : function() {
+                $.ajax({
+                    type: "POST",
+                    sync : false,
+                    serializeForm: true,
+                    url: "/CommunityPark/confirmInfo/"+rentInfoId,
+                    // contentType:"application/json;charset=UTF-8",
+                    // dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        var data = res.data;
+                        var code = res.code;
+                        if (code==0){
+                            alert("确认成功!");
+                            $("#confirmGive").attr('disabled',true);
+                            $("#confirmGive").text("已确认");
+                            $("#editInfo").attr('disabled',true);
+                            $("#editInfo").text("不可更改");
+                        }else{
+                            alert("确认失败!");
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.readyState);
+                        alert(XMLHttpRequest.status);
+                        alert(textStatus);
+                    },
+                });
+            }
+        }) .modal('show');
+    });
+
+    /**
+     *
+     * 用户预留按钮点击事件，这是有车位的人做的
+     * */
+    $("#reserverInfo").click(function(event){
+        event.preventDefault();
+        var rentInfoId = window.location.pathname.split("/")[3];
+        $(".ui.basic.rent.modal").modal({
+            onApprove : function() {
+                $.ajax({
+                    type: "POST",
+                    sync : false,
+                    serializeForm: true,
+                    url: "/CommunityPark/reserverInfo/"+rentInfoId,
+                    // contentType:"application/json;charset=UTF-8",
+                    // dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        var data = res.data;
+                        var code = res.code;
+                        var msg = res.msg;
+                        if (code==0){
+                            alert("预留成功!");
+                            $("#reserverInfo").attr('disabled',true);
+                            $("#reserverInfo").text("已预留");
+                        }
+                        if(code==1){
+                            alert(msg);
+                        }
+                        if(code==2){
+                            alert(msg);
+                        }
+                        if(code==3){
+                            alert(msg);
+                        }
+                        if(code==7){
+                            alert(msg);
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.readyState);
+                        alert(XMLHttpRequest.status);
+                        alert(textStatus);
+                    },
+                });
+            }
+        }) .modal('show');
+    });
+
+    /**
+     * 跳转到求租详情页
+     * @param id
+     */
+    $("#editInfo").click(function(event){
+        event.preventDefault();
+        var rentInfoId = window.location.pathname.split("/")[3];
+        alert(rentInfoId)
+        window.location.href = "/CommunityPark/editRentInput/"+rentInfoId;
+    });
+
+    /**
+     * 点击删除按钮，将typeid改成-1，也就是将发布的信息删除了
+     *
+     */
+    $("#delInfo").click(function(event){
+        event.preventDefault();
+        var rentInfoId = window.location.pathname.split("/")[3];
+        alert(rentInfoId)
+        $(".ui.basic.del.modal").modal({
+            onApprove : function() {
+                $.ajax({
+                    type: "POST",
+                    sync : false,
+                    serializeForm: true,
+                    url: "/CommunityPark/deleteRentInfo/"+rentInfoId,
+                    // contentType:"application/json;charset=UTF-8",
+                    // dataType: "json",
+                    success: function (res) {
+                        console.log(res);
+                        var data = res.data;
+                        var code = res.code;
+                        if (code==0){
+                            alert("删除成功!");
+                            window.location.href = "/CommunityPark/index";
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.readyState);
+                        alert(XMLHttpRequest.status);
+                        alert(textStatus);
+                    },
+                });
+            }
+        }) .modal('show');
+        // window.location.replace("/CommunityPark/index");
+    });
+
+</script>
+</body>
+</html>

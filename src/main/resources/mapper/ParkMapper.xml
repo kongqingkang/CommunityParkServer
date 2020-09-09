@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.ParkMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Park">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table park-->
+    <result column="park_id" jdbcType="VARCHAR" property="parkId" />
+    <result column="park_name" jdbcType="VARCHAR" property="parkName" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="identify_flag" jdbcType="INTEGER" property="identifyFlag" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="rentout_flag" jdbcType="INTEGER" property="rentoutFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    park_id, park_name, community_id, identify_flag, `location`, rentout_flag
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park
+    (park_id, park_name, community_id, identify_flag, `location`, rentout_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.parkId,jdbcType=VARCHAR}, #{item.parkName,jdbcType=VARCHAR}, #{item.communityId,jdbcType=VARCHAR}, 
+        #{item.identifyFlag,jdbcType=INTEGER}, #{item.location,jdbcType=VARCHAR}, #{item.rentoutFlag,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Park">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park
+    (park_id, park_name, community_id, identify_flag, `location`, rentout_flag)
+    values
+    (#{parkId,jdbcType=VARCHAR}, #{parkName,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, 
+      #{identifyFlag,jdbcType=INTEGER}, #{location,jdbcType=VARCHAR}, #{rentoutFlag,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    park_id = #{parkId,jdbcType=VARCHAR}, 
+    park_name = #{parkName,jdbcType=VARCHAR}, 
+    community_id = #{communityId,jdbcType=VARCHAR}, 
+    identify_flag = #{identifyFlag,jdbcType=INTEGER}, 
+    `location` = #{location,jdbcType=VARCHAR}, 
+    rentout_flag = #{rentoutFlag,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Park">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parkId != null">
+        park_id,
+      </if>
+      <if test="parkName != null">
+        park_name,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="identifyFlag != null">
+        identify_flag,
+      </if>
+      <if test="location != null">
+        `location`,
+      </if>
+      <if test="rentoutFlag != null">
+        rentout_flag,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parkId != null">
+        #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkName != null">
+        #{parkName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyFlag != null">
+        #{identifyFlag,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="rentoutFlag != null">
+        #{rentoutFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="parkId != null">
+        park_id = #{parkId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkName != null">
+        park_name = #{parkName,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyFlag != null">
+        identify_flag = #{identifyFlag,jdbcType=INTEGER},
+      </if>
+      <if test="location != null">
+        `location` = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="rentoutFlag != null">
+        rentout_flag = #{rentoutFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="selectIdentifyFlagByParkIdAndName" resultType="cn.kqk.community_park.bean.Park">
+      select * from park where community_id=#{communityId} and park_name=#{parkName} and location=#{location};
+    </select>
+    <select id="selectIdentifyFlagByParkAddressAndName" resultMap="BaseResultMap">
+      select park_id,identify_flag from park where park_name=#{parkName} and location=#{parkAddress};
+    </select>
+    <select id="selectParkInfoById" resultMap="BaseResultMap">
+      select * from park where park_id=#{parkId};
+    </select>
+    <select id="selectRentoutFlagByParkId" resultMap="BaseResultMap">
+      select * from park where park_id=#{parkId} and rentout_flag=1;
+    </select>
+    <update id="updateRentOutFlagByParkId">
+      update park set rentout_flag=1 where park_id=#{parkId};
+    </update>
+    <select id="selectFreePark" resultType="int">
+      select count(*) from park where rentout_flag=0;
+    </select>
+    <update id="updateIdentifyFlagByParkId">
+      update park set identify_flag=#{identifyFlag} where park_id=#{parkId};
+    </update>
+  <select id="findPark" resultType="cn.kqk.community_park.bean.dto.ParkListDTO">
+    select p.park_id,p.identify_flag,pr.owner_name,p.rentout_flag,p.location,p.park_name,pr.mobile,community_name from park p,park_review pr,community c where p.park_id=pr.park_id and community_name in(SELECT community_name from community where c.community_id=p.community_id)
+  </select>
+  <select id="selectRentoutFlagByParkIdSingle" resultMap="BaseResultMap">
+    select * from park where park_id=#{parkId};
+  </select>
+  <update id="updateRentoutFlagByParkId">
+    update park set rentout_flag=#{rentoutFlag} where park_id=#{parkId};
+  </update>
+</mapper>

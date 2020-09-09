@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.RoleMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Role">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table `role`-->
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    role_id, role_name, `status`
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update `role`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="role_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when role_id = #{item.roleId,jdbcType=VARCHAR} then #{item.roleName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when role_id = #{item.roleId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where role_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.roleId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update `role`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="role_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.roleName != null">
+            when role_id = #{item.roleId,jdbcType=VARCHAR} then #{item.roleName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when role_id = #{item.roleId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where role_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.roleId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `role`
+    (role_id, role_name, `status`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.roleId,jdbcType=VARCHAR}, #{item.roleName,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Role">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `role`
+    (role_id, role_name, `status`)
+    values
+    (#{roleId,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+    on duplicate key update 
+    role_id = #{roleId,jdbcType=VARCHAR}, 
+    role_name = #{roleName,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Role">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into `role`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+    <select id="selectRoleByUserId" resultMap="BaseResultMap">
+      select user_id from role
+    </select>
+</mapper>

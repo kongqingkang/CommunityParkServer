@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title th:replace="${title}">车位共享</title>
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">-->
+<!--    <link rel="stylesheet" href="/CommunityPark/css/typo.css" th:href="@{typo.css}">-->
+<!--    <link rel="stylesheet" href="/CommunityPark/css/animate.css" th:href="@{nimate.css}">-->
+<!--    <link rel="stylesheet" href="/CommunityPark/css/me.css" th:href="@{me.css}">-->
+<!--    <link rel="stylesheet" href="/CommunityPark/prism/prism.css" th:href="@{prism/prism.css}">-->
+<!--    <link rel="stylesheet" href="/CommunityPark/tocbot/tocbot.css" th:href="@{tocbot/tocbot.css}">-->
+</head>
+<body>
+<!--导航-->
+<nav th:fragment="menu(n)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">车位共享</h2>
+            <a href="#" th:href="@{index}" class="m-item item m-mobile-hide" th:classappend="${n==1}?'active'"><i class="home icon"></i>首页</a>
+            <a href="#" th:href="@{getUserReview}" class="m-item item m-mobile-hide" th:classappend="${n==3}?'active'"><i class="tags icon"></i>认证</a>
+            <a href="#" th:href="@{getRentInput}" class="m-item item m-mobile-hide" th:classappend="${n==2}?'active'"><i class="idea icon"></i>发布</a>
+            <a href="#" th:href="@{archives}" class="m-item item m-mobile-hide" th:classappend="${n==4}?'active'"><i class="clone icon"></i>归档</a>
+            <a href="#" th:href="@{about}" class="m-item item m-mobile-hide" th:classappend="${n==5}?'active'"><i class="info icon"></i>个人信息</a>
+            <a href="#" th:href="@{message}" class="m-item item m-mobile-hide" th:classappend="${n==7}?'active'"><i class="comment alternate outline icon"></i>消息</a>
+            <div class="right item m-mobile-hide">
+                <div id="search_box" class="ui icon inverted input transparent">
+                    <!--input要用th:value-->
+                    <input type="text" name="query" placeholder="Search..." id="query">
+                    <i class="search link icon"></i>
+                </div>
+                <div class="ui dropdown item" style="margin-left: 50px !important;">
+                    <div class="text">
+                        <img id="avatarUrl1" src="https://unsplash.it/100/100?image=1006" alt="" class="ui avatar image">
+                        <span id="truthName2"></span>
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a class="item" onclick=logoutA()>注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<!--底部-->
+<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid"><!--stackable代表可堆叠-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img th:src="@{/images/wechat.jpg}" src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 7em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">作者信息</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">盐城工学院</a>
+                    <a href="#" class="item">Z计算机161</a>
+                    <a href="#" class="item">孔庆康</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>
+                <div style="color: #888888">QQ:1170830826</div>
+                <div style="color: #888888">TEL:17768227869</div>
+                <!--#{index.email}"是在resource/message.properties里取值-->
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">车位平台</h4>
+                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">致力于打造一个非常好的社区车位共享平台，为大家带来优质的服务！盗版必究！</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>
+    </div>
+</footer>
+<!--<footer th:fragment="footer" class="ui inverted vertical segment m-padded-tb-massive">-->
+<!--    <div class="ui center aligned container">-->
+<!--        <div class="ui inverted divided stackable grid">&lt;!&ndash;stackable代表可堆叠&ndash;&gt;-->
+<!--            <div class="three wide column">-->
+<!--                <div class="ui inverted link list">-->
+<!--                    <div class="item">-->
+<!--                        <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" class="ui rounded image" alt="" style="width: 7em">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="three wide column">-->
+<!--                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">最新发布</h4>-->
+<!--                <div id="newblog-container">-->
+<!--                    <div class="ui inverted link list" th:fragment="newblogList">-->
+<!--                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="item" th:each="blog:${newblogs}" th:text="${blog.title}">用户故事</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="four wide column">-->
+<!--                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>-->
+<!--                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">-->
+<!--                    <span class="item">Email:<a class="item" href="#" th:text="#{index.email}">Email:1170830826@qq.com</a></span>-->
+<!--                    &lt;!&ndash;#{index.email}"是在resource/message.properties里取值&ndash;&gt;-->
+<!--                    <a href="#" class="item">QQ:1170830826</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="six wide column">-->
+<!--                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">Blog</h4>-->
+<!--                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">这是一个demo</p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="ui inverted section divider"></div>-->
+<!--        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>-->
+<!--    </div>-->
+<!--</footer>-->
+<!--<th:block th:fragment="script">-->
+
+<!--</th:block>-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+<!--<script src="../static/lib/prism/prism.js" th:src="@{lib/prism/prism.js}"></script>-->
+<!--<script src="../static/lib/tocbot/tocbot.min.js" th:src="@{lib/tocbot/tocbot.min.js}"></script>-->
+<!--<script src="../static/lib/qrcode/qrcode.min.js" th:src="@{lib/qrcode/qrcode.min.js}"></script>-->
+<script>
+</script>
+</body>
+</html>

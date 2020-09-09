@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <!--initial-scale缩放比例-->
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>车位审核</title><!--  -----------------   chewei ------------------------        -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="css/me.css">
+</head>
+<body>
+<!--导航-->
+<!--导航-->
+<nav th:replace="_fragments :: menu(3)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+    <div class="ui container">
+        <div class="ui inverted secondary stackable menu">
+            <h2 class="ui teal header item">车位共享</h2>
+            <a href="#" class="m-item item m-mobile-hide"><i class="home icon"></i>首页</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="idea icon"></i>发布</a>
+            <a href="#" class="active m-item item m-mobile-hide"><i class="tags icon"></i>认证</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="clone icon"></i>归档</a>
+            <a href="#" class="m-item item m-mobile-hide"><i class="info icon"></i>个人信息</a>
+            <div class="right m-item item m-mobile-hide menu">
+                <div class="ui dropdown item">
+                    <div class="text">
+                        <img src="https://unsplash.it/100/100?image=1006" alt="" class="ui avatar image">
+                        孔庆康
+                    </div>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a th:href="@{logout}" href="#" class="item">注销</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#" class="ui menu toggle black icon button m-right-top m-mobile-show">
+        <i class="sidebar icon"></i>
+    </a>
+</nav>
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a th:href="@{getUserReview}" href="#" class="item">实名认证</a>
+            <a th:href="@{getParkReview}" href="#" class="active teal item">车位认证</a>
+        </div>
+    </div>
+</div>
+<!--中间-->
+<div class="m-container-small m-padded-tb-large">
+    <div class="ui container">
+       <form class="ui form" name="userForm">
+            <div class="two fields">
+                <div class="required field">
+                    <div class="ui left labeled input">
+                        <label class="ui compact teal basic label">所有人姓名</label>
+                        <input type="text" id="ownerName" name="ownerName" placeholder="请输入姓名……">
+                    </div>
+                </div>
+            </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">联系方式</label>
+                       <input type="text" id="mobile" name="mobile" placeholder="请输入联系方式……">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">身份证号</label>
+                       <input type="text" id="idCard" name="idCard" placeholder="请输入身份证号……">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui labeled input">
+                       <label class="ui compact teal basic label">性别</label>
+                       <div class="required inline fields" style="padding-left: 1.5em">
+                           <div class="field">
+                               <div class="ui radio checkbox">
+                                   <input type="radio" name="sexy" checked="checked" tabindex="0" class="hidden" value="男">
+                                   <label class="label" style="font-size: 13pt">男</label>
+                               </div>
+                           </div>
+                           <div class="field">
+                               <div class="ui radio checkbox">
+                                   <input type="radio" name="sexy" tabindex="0" class="hidden" value="女">
+                                   <label  style="font-size: 13pt">女</label>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">社区名</label>
+                       <input type="text" id="communityName" name="communityName" placeholder="请输入社区名……">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">社区地址</label>
+                       <input type="text" id="communityAddress" name="communityAddress" placeholder="请输入社区地址……">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">车位地址</label>
+                       <input type="text" id="parkAddress" name="parkAddress" placeholder="请输入车位地址……">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">车位号</label>
+                       <input type="text" id="parkName" name="parkName" placeholder="请输入车位号，如A13">
+                   </div>
+               </div>
+           </div>
+           <div class="two fields">
+               <div class="required field">
+                   <div class="ui left labeled input">
+                       <label class="ui compact teal basic label">车位照和证明材料</label>
+                   </div>
+                   <div class="ui small images">
+                       <input type="file" name="file" id="id-card-file" style="display: none" accept="image/png, image/jpeg, image/jpg" multiple="multiple" onchange="checkImage(this)">
+                       <button type="button" class="ui button" id="btn-id-card" name="btn-id-card-1" onclick="getIdCardImage()">获取车位照片和证明材料</button>
+                       <div id="onLoadImage">
+                           <img src="images/1.JPEG" class="ui image" id="show-id-card-img-1" name="show-id-card-img-1">
+                       </div>
+                   </div>
+               </div>
+           </div>
+            <div class="ui error message"></div>
+            <div class="ui center aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui teal button">提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!--底部-->
+<footer th:replace="_fragments::footer" class="ui inverted vertical segment m-padded-tb-massive">
+    <div class="ui center aligned container">
+        <div class="ui inverted divided stackable grid"><!--stackable代表可堆叠-->
+            <div class="three wide column">
+                <div class="ui inverted link list">
+                    <div class="item">
+                        <img src="../static/images/wechat.jpg" class="ui rounded image" alt="" style="width: 7em">
+                    </div>
+                </div>
+            </div>
+            <div class="three wide column">
+                <h4 class="ui inverted header m-text-thin m-text-lined m-text-sapced">最新发布</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                    <a href="#" class="item">用户故事</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-opacity-mini m-text-lined m-text-sapced">
+                    <a href="#" class="item">Email:1170830826@qq.com</a>
+                    <a href="#" class="item">QQ:1170830826</a>
+                </div>
+            </div>
+            <div class="six wide column">
+                <h4 class="ui inverted header header m-text-thin m-text-lined m-text-sapced">车位平台</h4>
+                <p class="m-text-thin m-opacity-mini m-text-lined m-text-sapced">致力于打造一个非常好的社区车位共享平台，为大家带来优质的服务！</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p>Copyright © 2019-2020 kongqingkang Designed by kongqingkang</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="js/myInfo.js"></script>
+<script>
+    $(document).ready(function(){
+        init();
+    });
+    function getIdCardImage(){
+        $("#id-card-file").click();
+    }
+    var curFiles = [];//文件数组，用来保存上传的文件信息
+    function checkImage(obj) {
+        var files = obj.files;
+        console.log(files.length);
+        if(files){
+            if(files.length <= 2) {//把一次上传图片数限制在3张
+                for (var i = 0; i < files.length; i++) {
+                    var item = files.item(i);
+                    var size = item.size;
+                    if (size / 1000 < 100) { //简易大小限制100K
+                        curFiles.push(item);
+                    }
+                    else {
+                        alert("第" + (i + 1) + "张图片过大");
+                    }
+                }
+            }
+            else{
+                $("#id-card-file").val("");
+                alert("一次最多上传2张图片");
+                return;
+            }
+        }
+        else {
+            $("#id-card-file").val("");
+            alert("请选择上传文件");
+            return;
+        }
+
+        //去除文件名相同的情况（上传列表中多次出现同一个文件）
+        for (var i = 0; i < curFiles.length - 1; i++) {
+            for (var j = 1; j < curFiles.length; j++) {
+                if (i != j) {
+                    if (curFiles[i].name == curFiles[j].name) {
+                        curFiles.splice(j, 1)
+                    }
+                }
+            }
+        }
+
+        //判断上传图片大小(100KB)
+        for(var i = 0; i < curFiles.length; i++){
+            var size = curFiles[i].size;
+            if(size/1000>100){
+                curFiles.splice(i, 1);
+            }
+
+        }
+        console.log(curFiles);
+        onLoadImage();
+    }
+    //预览图片
+    function onLoadImage() {
+        $("#onLoadImage").html("");
+        for(var i = 0; i < curFiles.length; i++){
+            (function(i){
+                var file = curFiles[i];
+                var reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function(){
+                    //<img src="../static/images/wechat.jpg" class="ui image" id="show-id-card-img-1" name="show-id-card-img-1">
+                    $('#onLoadImage').append("<img class=\"ui image\" src='"+reader.result+"'/><div><span>"+file.name+"</span><button class='ui button' id='"+i+"' onclick='del(this.id)'>删除</button></div><br>");
+                }
+            })(i)
+        }
+    }
+    //删除功能
+    function del(id) {
+        var name = $("#"+id).prev().text();
+        console.log(name);
+        curFiles = curFiles.filter(function(file) {
+            return file.name !== name;
+        });
+        console.log(curFiles);
+        onLoadImage();
+    }
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+    $('.ui.radio.checkbox')
+        .checkbox()
+    ;
+    $('.ui.form').form({
+        fields: {
+            ownerName: {
+                identifier: 'ownerName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入所有人姓名!'
+                }]
+            },
+            mobile: {
+                identifier: 'mobile',
+                rules: [{
+                    type: 'regExp[/^1(3|4|5|6|7|8|9)\\d{9}$/]',
+                    prompt: '请输入正确的手机号!'
+                }]
+            },
+            idCard: {
+                identifier: 'idCard',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入正确的身份证号!'
+                }]
+            },
+            communityName: {
+                identifier: 'communityName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入社区名!'
+                }]
+            },
+            communityAddress: {
+                identifier: 'communityAddress',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入社区地址!'
+                }]
+            },
+            parkAddress: {
+                identifier: 'parkAddress',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入车位地址!'
+                }]
+            },
+            parkName: {
+                identifier: 'parkName',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入车位号，如A13……!'
+                }]
+            }
+        },
+        onSuccess: function(e) {
+            //阻止表单的提交
+            e.preventDefault();
+            //创建传输对象
+            var formData = new FormData();
+            /**
+             * 特别注意：fileAndFilesAndObject,file是指form和input中name的值
+             * files是指一个数组
+             * */
+            var files=document.userForm.file.files;
+            for (var i=0;i<files.length;i++){
+                formData.append("parkReviwFiles",files[i])
+            }
+            var ownerName= $('#ownerName').val();
+            var mobile=$('#mobile').val();
+            var idCard= $('#idCard').val();
+            var sex=$('.radio.checkbox input[name="sexy"]:checked').val();
+            var communityName= $('#communityName').val();
+            var communityAddress= $('#communityAddress').val();
+            var parkAddress= $('#parkAddress').val();
+            var parkName= $('#parkName').val();
+            formData.append("ownerName",ownerName);
+            formData.append("mobile",mobile);
+            formData.append("idCard",idCard);
+            formData.append("sex",sex);
+            formData.append("communityName",communityName);
+            formData.append("communityAddress",communityAddress);
+            formData.append("parkAddress",parkAddress);
+            formData.append("parkName",parkName);
+            var myToken = sessionStorage.getItem("Authorization")//获取token
+            $.ajax({
+                type: "POST",
+                serializeForm: true,
+                url: "parkReview",
+                processData: false,//必不可缺
+                contentType: false,//必不可缺
+                cache : false,
+                data:formData,
+                //contentType:"multipart/form-data",
+                dataType: "json",
+                headers:{
+                    "Authorization":myToken
+                },
+                success: function (res) {
+                    if (res.code==0){
+                        alert("提交成功！")
+                    } else{
+                        alert(res.msg);
+                        alert("---提交失败！---");
+                    }
+                },
+                error:function (res) {
+                    console.log(res.msg);
+                    alert("---请检查网络，没网搞不了---");
+                }
+            });
+        }
+    });
+</script>
+</body>
+</html>

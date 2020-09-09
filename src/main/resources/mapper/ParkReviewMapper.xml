@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.ParkReviewMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.ParkReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table park_review-->
+    <id column="park_review_id" jdbcType="VARCHAR" property="parkReviewId" />
+    <result column="owner_name" jdbcType="VARCHAR" property="ownerName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="community_id" jdbcType="VARCHAR" property="communityId" />
+    <result column="park_address" jdbcType="VARCHAR" property="parkAddress" />
+    <result column="evidence_url" jdbcType="VARCHAR" property="evidenceUrl" />
+    <result column="park_photo_url" jdbcType="VARCHAR" property="parkPhotoUrl" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="park_id" jdbcType="VARCHAR" property="parkId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    park_review_id, owner_name, mobile, identity_card, sex, community_id, park_address, 
+    evidence_url, park_photo_url, `status`, user_id, park_id
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update park_review
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="owner_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.ownerName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="mobile = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.mobile,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="identity_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.identityCard,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.sex,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="community_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.communityId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="park_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkAddress,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="evidence_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.evidenceUrl,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="park_photo_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkPhotoUrl,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.userId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="park_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where park_review_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.parkReviewId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update park_review
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="owner_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.ownerName != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.ownerName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="mobile = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mobile != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.mobile,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="identity_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.identityCard != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.identityCard,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.sex,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="community_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.communityId != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.communityId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="park_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.parkAddress != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkAddress,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="evidence_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.evidenceUrl != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.evidenceUrl,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="park_photo_url = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.parkPhotoUrl != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkPhotoUrl,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.userId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="park_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.parkId != null">
+            when park_review_id = #{item.parkReviewId,jdbcType=VARCHAR} then #{item.parkId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where park_review_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.parkReviewId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park_review
+    (park_review_id, owner_name, mobile, identity_card, sex, community_id, park_address, 
+      evidence_url, park_photo_url, `status`, user_id, park_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.parkReviewId,jdbcType=VARCHAR}, #{item.ownerName,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, 
+        #{item.identityCard,jdbcType=VARCHAR}, #{item.sex,jdbcType=VARCHAR}, #{item.communityId,jdbcType=VARCHAR}, 
+        #{item.parkAddress,jdbcType=VARCHAR}, #{item.evidenceUrl,jdbcType=VARCHAR}, #{item.parkPhotoUrl,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=INTEGER}, #{item.userId,jdbcType=VARCHAR}, #{item.parkId,jdbcType=VARCHAR}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.ParkReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park_review
+    (park_review_id, owner_name, mobile, identity_card, sex, community_id, park_address, 
+      evidence_url, park_photo_url, `status`, user_id, park_id)
+    values
+    (#{parkReviewId,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{identityCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{communityId,jdbcType=VARCHAR}, 
+      #{parkAddress,jdbcType=VARCHAR}, #{evidenceUrl,jdbcType=VARCHAR}, #{parkPhotoUrl,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{parkId,jdbcType=VARCHAR}
+      )
+    on duplicate key update 
+    park_review_id = #{parkReviewId,jdbcType=VARCHAR}, 
+    owner_name = #{ownerName,jdbcType=VARCHAR}, 
+    mobile = #{mobile,jdbcType=VARCHAR}, 
+    identity_card = #{identityCard,jdbcType=VARCHAR}, 
+    sex = #{sex,jdbcType=VARCHAR}, 
+    community_id = #{communityId,jdbcType=VARCHAR}, 
+    park_address = #{parkAddress,jdbcType=VARCHAR}, 
+    evidence_url = #{evidenceUrl,jdbcType=VARCHAR}, 
+    park_photo_url = #{parkPhotoUrl,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}, 
+    user_id = #{userId,jdbcType=VARCHAR}, 
+    park_id = #{parkId,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.ParkReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into park_review
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parkReviewId != null">
+        park_review_id,
+      </if>
+      <if test="ownerName != null">
+        owner_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="identityCard != null">
+        identity_card,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="communityId != null">
+        community_id,
+      </if>
+      <if test="parkAddress != null">
+        park_address,
+      </if>
+      <if test="evidenceUrl != null">
+        evidence_url,
+      </if>
+      <if test="parkPhotoUrl != null">
+        park_photo_url,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="parkId != null">
+        park_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="parkReviewId != null">
+        #{parkReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null">
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkAddress != null">
+        #{parkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="evidenceUrl != null">
+        #{evidenceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parkPhotoUrl != null">
+        #{parkPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null">
+        #{parkId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="parkReviewId != null">
+        park_review_id = #{parkReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null">
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        identity_card = #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="communityId != null">
+        community_id = #{communityId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkAddress != null">
+        park_address = #{parkAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="evidenceUrl != null">
+        evidence_url = #{evidenceUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="parkPhotoUrl != null">
+        park_photo_url = #{parkPhotoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkId != null">
+        park_id = #{parkId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+    <select id="selectReviewInfoByUserId" resultType="cn.kqk.community_park.bean.ParkReview">
+      select * from park_review where user_id=#{user_id} limit 1;
+    </select>
+    <select id="selectReviewInfoByParkId" resultMap="BaseResultMap">
+      select park_review_id,user_id from park_review where park_id = #{parkId};
+    </select>
+    <select id="selectReviewInfoByCommunityIdAndParkAddress" resultType="cn.kqk.community_park.bean.ParkReview">
+      select count(*) from park_review where community_id=#{communityId} and park_address=#{parkAddress} limit 1;
+    </select>
+    <select id="selectParkInfoByParkReviewId" resultMap="BaseResultMap">
+      select * from park_review where park_review_id=#{parkReviewId};
+    </select>
+    <select id="selectFreePark" resultMap="BaseResultMap">
+      select status,park_id from park_review where user_id=#{userId} and status=1;
+    </select>
+    <select id="selectNoIdentify" resultType="int">
+      select count(*) from park_review where status=0;
+    </select>
+    <select id="findParkIndentify" resultType="cn.kqk.community_park.bean.dto.ParkReviewDTO">
+      select pr.park_review_id,pr.owner_name,pr.mobile,identity_card,pr.park_address,pr.evidence_url,pr.park_photo_url,pr.status,c.community_name from park_review pr,community c where pr.community_id=c.community_id
+    </select>
+  <update id="updateStatusByParkReviewId">
+    update park_review set status=1 where park_review_id=#{parkReviewId};
+  </update>
+  <select id="selectUserIdByUserReviewId" resultMap="BaseResultMap">
+    select user_id from park_review where park_review_id=#{parkReviewId};
+  </select>
+  <update id="updateStatusByUserUnReviewId">
+    update park_review set status=2 where park_review_id=#{parkReviewId};
+  </update>
+    <select id="selectPhotoByParkReviewId" resultType="cn.kqk.community_park.bean.dto.ParkReviewDTO">
+      select evidence_url,park_photo_url from park_review where park_review_id=#{parkReviewId};
+    </select>
+</mapper>

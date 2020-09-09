@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.UserLoginMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.UserLogin">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table user_login-->
+    <id column="user_login_id" jdbcType="VARCHAR" property="userLoginId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="auth" jdbcType="VARCHAR" property="auth" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="login_status_flag" jdbcType="INTEGER" property="loginStatusFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    user_login_id, account, auth, user_id, `type`, login_status_flag
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update user_login
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="account = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+        when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.account,jdbcType=VARCHAR}
+      </foreach>
+      </trim>
+      <trim prefix="auth = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.auth,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.userId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.type,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="login_status_flag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.loginStatusFlag,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where user_login_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.userLoginId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update user_login
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="account = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.account != null">
+            when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.account,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="auth = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.auth != null">
+            when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.auth,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.userId != null">
+            when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.userId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`type` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.type != null">
+            when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.type,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="login_status_flag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.loginStatusFlag != null">
+            when user_login_id = #{item.userLoginId,jdbcType=VARCHAR} then #{item.loginStatusFlag,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where user_login_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.userLoginId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_login
+    (user_login_id, account, auth, user_id, `type`, login_status_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userLoginId,jdbcType=VARCHAR}, #{item.account,jdbcType=VARCHAR}, #{item.auth,jdbcType=VARCHAR},
+        #{item.userId,jdbcType=VARCHAR}, #{item.type,jdbcType=INTEGER}, #{item.loginStatusFlag,jdbcType=INTEGER}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.UserLogin">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_login
+    (user_login_id, account, auth, user_id, `type`, login_status_flag)
+    values
+    (#{userLoginId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{auth,jdbcType=VARCHAR},
+      #{userId,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{loginStatusFlag,jdbcType=INTEGER}
+      )
+    on duplicate key update
+    user_login_id = #{userLoginId,jdbcType=VARCHAR},
+    account = #{account,jdbcType=VARCHAR},
+    auth = #{auth,jdbcType=VARCHAR},
+    user_id = #{userId,jdbcType=VARCHAR},
+    `type` = #{type,jdbcType=INTEGER},
+    login_status_flag = #{loginStatusFlag,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.UserLogin">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_login
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userLoginId != null">
+        user_login_id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="auth != null">
+        auth,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="loginStatusFlag != null">
+        login_status_flag,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userLoginId != null">
+        #{userLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="auth != null">
+        #{auth,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="loginStatusFlag != null">
+        #{loginStatusFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update
+    <trim suffixOverrides=",">
+      <if test="userLoginId != null">
+        user_login_id = #{userLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="auth != null">
+        auth = #{auth,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="loginStatusFlag != null">
+        login_status_flag = #{loginStatusFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectByAccount" resultMap="BaseResultMap">
+    select * from user_login where account=#{account} limit 1
+  </select>
+
+  <select id="selectTypeByAccount" resultMap="BaseResultMap">
+    select user_id,type from user_login where account=#{account} limit 1
+  </select>
+
+  <select id="selTypeByAccount" resultMap="BaseResultMap">
+    select * from user_login where account=#{account} limit 1
+  </select>
+
+  <select id="selectByAccountOrMobile" resultType="java.lang.Integer">
+    select count(*) from user_login where account = #{account} or account = #{mobile}
+  </select>
+    <select id="selectAuthSameByUserLoginId" resultType="java.lang.Integer">
+      select count(*) from user_login where auth=#{auth} and user_id =#{userId};
+    </select>
+  <select id="selectUserIdByAuth" resultMap="BaseResultMap">
+    select * from user_login where auth=#{auth} and user_id=#{userId};
+  </select>
+  <update id="updateAuthByUserLoginId" parameterType="cn.kqk.community_park.bean.UserLogin">
+    update user_login set auth=#{auth,jdbcType=VARCHAR} where user_login_id=#{userLoginId,jdbcType=VARCHAR};
+  </update>
+  <update id="AuthUpdateBatch" parameterType="list">
+    <if test="list!=null">
+      <foreach collection="list" item="i" index= "index" open="" close="" separator =";">
+        update user_login set auth=#{auth} where user_login_id=#{i.userLoginId}
+      </foreach>
+    </if>
+  </update>
+  <select id="selectUserLoginIdByUserId" resultMap="BaseResultMap">
+    select user_login_id from user_login where user_id = #{userId};
+  </select>
+</mapper>

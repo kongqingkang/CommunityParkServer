@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.WantMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Want">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table want-->
+    <result column="want_id" jdbcType="VARCHAR" property="wantId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="rent_info_id" jdbcType="VARCHAR" property="rentInfoId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    want_id, user_id, rent_info_id, `status`
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into want
+    (want_id, user_id, rent_info_id, `status`)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.wantId,jdbcType=VARCHAR}, #{item.userId,jdbcType=VARCHAR}, #{item.rentInfoId,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Want">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into want
+    (want_id, user_id, rent_info_id, `status`)
+    values
+    (#{wantId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{rentInfoId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER})
+    on duplicate key update 
+    want_id = #{wantId,jdbcType=VARCHAR}, 
+    user_id = #{userId,jdbcType=VARCHAR}, 
+    rent_info_id = #{rentInfoId,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Want">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into want
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wantId != null">
+        want_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="rentInfoId != null">
+        rent_info_id,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="wantId != null">
+        #{wantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentInfoId != null">
+        #{rentInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="wantId != null">
+        want_id = #{wantId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="rentInfoId != null">
+        rent_info_id = #{rentInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+    <select id="selectInfoByUserIdAndRentInfoId" resultMap="BaseResultMap">
+      select * from want where user_id=#{userId} and rent_info_id=#{rentInfoId};
+    </select>
+  <select id="selectStatusByWantIdAndRentInfoId" resultMap="BaseResultMap">
+    select * from want where rent_info_id=#{rentInfoId} and status=2;
+  </select>
+  <update id="updateStatusByUserIdAndRentInfoId">
+    update want set status=2 where user_id=#{userId} and rent_info_id=#{rentInfoId};
+  </update>
+  <select id="selectWantIdByRentInfoId" resultMap="BaseResultMap">
+    select * from want where rent_info_id=#{rentInfoId};
+  </select>
+  <update id="updateStatusByWantId" parameterType="list">
+    update want set status=2 where want_id=#{wantId};
+  </update>
+  <select id="selectAlluserIdByRentInfoId" resultMap="BaseResultMap" parameterType="list">
+    select user_id from want where rent_info_id=#{rentInfoId};
+  </select>
+</mapper>

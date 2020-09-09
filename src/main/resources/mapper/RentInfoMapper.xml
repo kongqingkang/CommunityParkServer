@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.RentInfoMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.RentInfo">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table rent_info-->
+    <result column="rent_info_id" jdbcType="VARCHAR" property="rentInfoId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="long_flag" jdbcType="INTEGER" property="longFlag" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="park_review_id" jdbcType="VARCHAR" property="parkReviewId" />
+    <result column="free_flag" jdbcType="INTEGER" property="freeFlag" />
+    <result column="confirm_status" jdbcType="INTEGER" property="confirmStatus" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    rent_info_id, title, views, long_flag, description, price, type_id, park_review_id, 
+    free_flag, confirm_status, publish_time, start_time, end_time, user_id
+  </sql>
+
+  <resultMap id="IndexResult" type="cn.kqk.community_park.bean.dto.IndexRentInfoDTO">
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="truth_name" jdbcType="VARCHAR" property="truthName" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+  </resultMap>
+
+  <sql id="indexRentInfoDTOList">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    title, views, description, truthName, views, avatar_url,publish_time
+  </sql>
+
+  <resultMap id="RentInfoPage" type="cn.kqk.community_park.bean.dto.RentInfoDTO">
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="truth_name" jdbcType="VARCHAR" property="truthName" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="long_flag" jdbcType="INTEGER" property="longFlag" />
+    <result column="user_id" jdbcType="VARCHAR" property="selfFlag" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="want_id" jdbcType="VARCHAR" property="wantId" />
+  </resultMap>
+
+  <resultMap id="RentOutInfoPage" type="cn.kqk.community_park.bean.dto.RentOutInfoDTO">
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="truth_name" jdbcType="VARCHAR" property="truthName" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+    <result column="user_id" jdbcType="VARCHAR" property="selfFlag" />
+    <result column="type_id" jdbcType="VARCHAR" property="typeId" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="long_flag" jdbcType="INTEGER" property="longFlag" />
+    <result column="free_flag" jdbcType="INTEGER" property="freeFlag" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
+    <result column="park_review_id" jdbcType="VARCHAR" property="parkReviewId" />
+    <result column="park_address" jdbcType="VARCHAR" property="parkAddress" />
+    <result column="park_name" jdbcType="VARCHAR" property="parkName" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+  </resultMap>
+
+  <resultMap id="Archives" type="cn.kqk.community_park.bean.dto.ArchivesRentInfoDTO">
+    <result column="park_review_id" jdbcType="VARCHAR" property="parkReviewId" />
+    <result column="park_id" jdbcType="VARCHAR" property="parkId" />
+    <result column="park_name" jdbcType="VARCHAR" property="parkName" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="community_name" jdbcType="VARCHAR" property="communityName" />
+    <result column="rentout_flag" jdbcType="INTEGER" property="rentoutFlag" />
+    <result column="identify_flag" jdbcType="INTEGER" property="identifyFlag" />
+  </resultMap>
+
+
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_info
+    (rent_info_id, title, views, long_flag, description, price, type_id, park_review_id, 
+      free_flag, confirm_status, publish_time, start_time, end_time, user_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.rentInfoId,jdbcType=VARCHAR}, #{item.title,jdbcType=VARCHAR}, #{item.views,jdbcType=INTEGER}, 
+        #{item.longFlag,jdbcType=INTEGER}, #{item.description,jdbcType=VARCHAR}, #{item.price,jdbcType=DECIMAL}, 
+        #{item.typeId,jdbcType=VARCHAR}, #{item.parkReviewId,jdbcType=VARCHAR}, #{item.freeFlag,jdbcType=INTEGER}, 
+        #{item.confirmStatus,jdbcType=INTEGER}, #{item.publishTime,jdbcType=TIMESTAMP}, 
+        #{item.startTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, #{item.userId,jdbcType=VARCHAR}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.RentInfo">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_info
+    (rent_info_id, title, views, long_flag, description, price, type_id, park_review_id, 
+      free_flag, confirm_status, publish_time, start_time, end_time, user_id)
+    values
+    (#{rentInfoId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{views,jdbcType=INTEGER}, 
+      #{longFlag,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{typeId,jdbcType=VARCHAR}, #{parkReviewId,jdbcType=VARCHAR}, #{freeFlag,jdbcType=INTEGER}, 
+      #{confirmStatus,jdbcType=INTEGER}, #{publishTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR})
+    on duplicate key update 
+    rent_info_id = #{rentInfoId,jdbcType=VARCHAR}, 
+    title = #{title,jdbcType=VARCHAR}, 
+    views = #{views,jdbcType=INTEGER}, 
+    long_flag = #{longFlag,jdbcType=INTEGER}, 
+    description = #{description,jdbcType=VARCHAR}, 
+    price = #{price,jdbcType=DECIMAL}, 
+    type_id = #{typeId,jdbcType=VARCHAR}, 
+    park_review_id = #{parkReviewId,jdbcType=VARCHAR}, 
+    free_flag = #{freeFlag,jdbcType=INTEGER}, 
+    confirm_status = #{confirmStatus,jdbcType=INTEGER}, 
+    publish_time = #{publishTime,jdbcType=TIMESTAMP}, 
+    start_time = #{startTime,jdbcType=TIMESTAMP}, 
+    end_time = #{endTime,jdbcType=TIMESTAMP}, 
+    user_id = #{userId,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.RentInfo">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into rent_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rentInfoId != null">
+        rent_info_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="views != null">
+        views,
+      </if>
+      <if test="longFlag != null">
+        long_flag,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="typeId != null">
+        type_id,
+      </if>
+      <if test="parkReviewId != null">
+        park_review_id,
+      </if>
+      <if test="freeFlag != null">
+        free_flag,
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status,
+      </if>
+      <if test="publishTime != null">
+        publish_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rentInfoId != null">
+        #{rentInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="longFlag != null">
+        #{longFlag,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="typeId != null">
+        #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkReviewId != null">
+        #{parkReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="freeFlag != null">
+        #{freeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="confirmStatus != null">
+        #{confirmStatus,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null">
+        #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="rentInfoId != null">
+        rent_info_id = #{rentInfoId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="longFlag != null">
+        long_flag = #{longFlag,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="typeId != null">
+        type_id = #{typeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parkReviewId != null">
+        park_review_id = #{parkReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="freeFlag != null">
+        free_flag = #{freeFlag,jdbcType=INTEGER},
+      </if>
+      <if test="confirmStatus != null">
+        confirm_status = #{confirmStatus,jdbcType=INTEGER},
+      </if>
+      <if test="publishTime != null">
+        publish_time = #{publishTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="selectTotleRentInfo" resultType="int">
+    select count(*) from rent_info;
+  </select>
+
+  <update id="updateViewsByRentInfoId">
+      update rent_info set views = views+1 where rent_info_id=#{rentUserId,jdbcType=VARCHAR};
+    </update>
+  <select id="findIndexInfo" resultMap="IndexResult" parameterType="list">
+    select ri.rent_info_id,ri.title,ri.description,ri.publish_time,ri.type_id,ri.views,ur.truth_name,ui.avatar_url from rent_info ri,user_review ur,user_info ui where ri.user_id=ur.applyer and ur.applyer=ui.user_id and ri.type_id!=-1 order by ri.publish_time desc
+  </select>
+  <select id="getLatestRentInfoLimitSix" resultMap="BaseResultMap">
+    select title,rent_info_id from rent_info where type_id =1 order by publish_time desc limit 5;
+  </select>
+  <select id="getLatestRentOutInfoLimitSix" resultMap="BaseResultMap">
+    select title,rent_info_id from rent_info where type_id =0 order by publish_time desc limit 6;
+  </select>
+  <select id="getMostViewsInfo" resultMap="BaseResultMap">
+    select title,rent_info_id from rent_info order by views desc limit 6;
+  </select>
+  <select id="rentInfoDetail" resultMap="BaseResultMap">
+    select * from rent_info where rent_info_id=#{rentInfoId};
+  </select>
+  <select id="findRentInfoDetail" resultMap="RentInfoPage">
+    select ri.user_id,ri.views,ri.title,ri.price,ri.description,ri.publish_time,ri.start_time,ri.end_time,ri.long_flag,ri.type_id,ur.truth_name,ur.mobile,ui.avatar_url from rent_info ri,user_review ur,user_info ui where ri.user_id=ur.applyer and ur.applyer=ui.user_id and rent_info_id=#{rentInfoId};
+  </select>
+  <select id="findRentOutInfoDetail" resultMap="RentOutInfoPage">
+    select ri.user_id,ri.publish_time,ri.park_review_id,ri.long_flag,ri.end_time,ri.start_time,ri.price ,ri.views,ri.title,ri.type_id,ri.free_flag,ri.description,ur.mobile,ur.truth_name,ui.avatar_url from rent_info ri,user_review ur,user_info ui where ri.user_id=ur.applyer and ur.applyer=ui.user_id and rent_info_id=#{rentInfoId};
+  </select>
+  <select id="findIndexParkInfoById" resultMap="Archives">
+    select pr.park_review_id,p.park_id,p.location,p.park_name,p.identify_flag,p.rentout_flag,c.community_name from park_review pr,park p,community c where pr.park_id=p.park_id and p.community_id = c.community_id and pr.user_id=#{userId}
+  </select>
+  <update id="updateRentInfoVOByRentInfoId" parameterType="cn.kqk.community_park.bean.vo.RentInfoVO">
+    update rent_info set title=#{param1.title,jdbcType=VARCHAR},
+  </update>
+  <update id="updateByRentInfoId">
+    update rent_info set title=#{param1.title,jdbcType=VARCHAR},long_flag=#{param1.longFlag,jdbcType=INTEGER},description=#{param1.description},price=#{param1.price,jdbcType=BIGINT},start_time=#{param1.startTime,jdbcType=VARCHAR},end_time=#{param1.endTime,jdbcType=VARCHAR},publish_time=#{publishTime} where rent_info_id=#{rentInfoId};
+  </update>
+  <update id="updateByRentOutInfoId">
+    update rent_info set free_flag=#{param1.freeFlag,jdbcType=INTEGER}, title=#{param1.title,jdbcType=VARCHAR},long_flag=#{param1.longFlag,jdbcType=INTEGER},description=#{param1.description},price=#{param1.price,jdbcType=BIGINT},start_time=#{param1.startTime,jdbcType=VARCHAR},end_time=#{param1.endTime,jdbcType=VARCHAR},publish_time=#{publishTime} where rent_info_id=#{rentOutInfoId};
+  </update>
+  <select id="selectUserIdByRentInfoId" resultMap="BaseResultMap">
+    select * from rent_info where rent_info_id=#{rentInfoId};
+  </select>
+  <update id="UpdateTypeIdByRentInfoId">
+    update rent_info set type_id=-1 where rent_info_id=#{rentInfoId};
+  </update>
+  <select id="findIndexInfoById" resultMap="IndexResult" parameterType="list">
+    select rent_info_id,title,publish_time,type_id from rent_info where user_id=#{userId} and type_id=0
+  </select>
+  <select id="findIndexInfoByIdTypeIdOne" resultMap="IndexResult" parameterType="list">
+    select rent_info_id,title,publish_time,type_id from rent_info where user_id=#{userId} and type_id=1
+  </select>
+  <select id="selectuserIdByRentInfoId" resultMap="BaseResultMap">
+    select user_id from rent_info where rent_info_id=#{rentInfoId};
+  </select>
+  <select id="selectAlluserIdByRentInfoId" resultMap="BaseResultMap" parameterType="list">
+    select user_id from rent_info where rent_info_id=#{rentInfoId};
+  </select>
+    <select id="selectAllRentInfoByDescription" resultMap="IndexResult"  parameterType="list">
+      select ri.rent_info_id,ri.title,ri.description,ri.publish_time,ri.type_id,ri.views,ur.truth_name,ui.avatar_url from rent_info ri,user_review ur,user_info ui where ri.user_id=ur.applyer and ur.applyer=ui.user_id and ri.type_id!=-1 and CONCAT(ri.description,ri.title) like concat('%',#{keyword},'%') order by ri.publish_time desc
+    </select>
+    <select id="selectTotalAddThisMonth" resultType="int">
+<!--      SELECT count(*) FROM rent_info WHERE YEARWEEK(date_format(publish_time,'%Y-%m-%d')) = YEARWEEK(now())-1;-->
+      SELECT count(*) FROM rent_info WHERE DATE_FORMAT( publish_time, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' );
+    </select>
+  <select id="selectRentInfoTotalByTypeId" resultType="int">
+    select count(*) from rent_info where type_id=#{typeId};
+  </select>
+</mapper>

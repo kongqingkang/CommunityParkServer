@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.UserReviewMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.UserReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table user_review-->
+    <id column="user_review_id" jdbcType="VARCHAR" property="userReviewId" />
+    <result column="truth_name" jdbcType="VARCHAR" property="truthName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="card_url1" jdbcType="VARCHAR" property="cardUrl1" />
+    <result column="card_url2" jdbcType="VARCHAR" property="cardUrl2" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="reviewer" jdbcType="VARCHAR" property="reviewer" />
+    <result column="applyer" jdbcType="VARCHAR" property="applyer" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    user_review_id, truth_name, mobile, identity_card, sex, card_url1, card_url2, `status`, 
+    reviewer, applyer
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update user_review
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="truth_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.truthName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="mobile = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.mobile,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="identity_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.identityCard,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.sex,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="card_url1 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.cardUrl1,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="card_url2 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.cardUrl2,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="reviewer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.reviewer,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="applyer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.applyer,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+    </trim>
+    where user_review_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.userReviewId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update user_review
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="truth_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.truthName != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.truthName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="mobile = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.mobile != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.mobile,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="identity_card = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.identityCard != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.identityCard,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="sex = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sex != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.sex,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_url1 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardUrl1 != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.cardUrl1,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_url2 = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardUrl2 != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.cardUrl2,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.status,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="reviewer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.reviewer != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.reviewer,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="applyer = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.applyer != null">
+            when user_review_id = #{item.userReviewId,jdbcType=VARCHAR} then #{item.applyer,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where user_review_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.userReviewId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_review
+    (user_review_id, truth_name, mobile, identity_card, sex, card_url1, card_url2, `status`, 
+      reviewer, applyer)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.userReviewId,jdbcType=VARCHAR}, #{item.truthName,jdbcType=VARCHAR}, #{item.mobile,jdbcType=VARCHAR}, 
+        #{item.identityCard,jdbcType=VARCHAR}, #{item.sex,jdbcType=VARCHAR}, #{item.cardUrl1,jdbcType=VARCHAR}, 
+        #{item.cardUrl2,jdbcType=VARCHAR}, #{item.status,jdbcType=INTEGER}, #{item.reviewer,jdbcType=VARCHAR}, 
+        #{item.applyer,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.UserReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_review
+    (user_review_id, truth_name, mobile, identity_card, sex, card_url1, card_url2, `status`, 
+      reviewer, applyer)
+    values
+    (#{userReviewId,jdbcType=VARCHAR}, #{truthName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{identityCard,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{cardUrl1,jdbcType=VARCHAR}, 
+      #{cardUrl2,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{reviewer,jdbcType=VARCHAR}, 
+      #{applyer,jdbcType=VARCHAR})
+    on duplicate key update 
+    user_review_id = #{userReviewId,jdbcType=VARCHAR}, 
+    truth_name = #{truthName,jdbcType=VARCHAR}, 
+    mobile = #{mobile,jdbcType=VARCHAR}, 
+    identity_card = #{identityCard,jdbcType=VARCHAR}, 
+    sex = #{sex,jdbcType=VARCHAR}, 
+    card_url1 = #{cardUrl1,jdbcType=VARCHAR}, 
+    card_url2 = #{cardUrl2,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=INTEGER}, 
+    reviewer = #{reviewer,jdbcType=VARCHAR}, 
+    applyer = #{applyer,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.UserReview">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into user_review
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userReviewId != null">
+        user_review_id,
+      </if>
+      <if test="truthName != null">
+        truth_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="identityCard != null">
+        identity_card,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="cardUrl1 != null">
+        card_url1,
+      </if>
+      <if test="cardUrl2 != null">
+        card_url2,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="reviewer != null">
+        reviewer,
+      </if>
+      <if test="applyer != null">
+        applyer,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userReviewId != null">
+        #{userReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="truthName != null">
+        #{truthName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUrl1 != null">
+        #{cardUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUrl2 != null">
+        #{cardUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reviewer != null">
+        #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="applyer != null">
+        #{applyer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="userReviewId != null">
+        user_review_id = #{userReviewId,jdbcType=VARCHAR},
+      </if>
+      <if test="truthName != null">
+        truth_name = #{truthName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="identityCard != null">
+        identity_card = #{identityCard,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUrl1 != null">
+        card_url1 = #{cardUrl1,jdbcType=VARCHAR},
+      </if>
+      <if test="cardUrl2 != null">
+        card_url2 = #{cardUrl2,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="reviewer != null">
+        reviewer = #{reviewer,jdbcType=VARCHAR},
+      </if>
+      <if test="applyer != null">
+        applyer = #{applyer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateImageByUserReview" parameterType="cn.kqk.community_park.bean.UserReview">
+    update user_review
+    set card_url1 = #{cardUrl1,jdbcType=VARCHAR}
+    where user_review_id = #{userReviewId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="updateImageByUserReview1" parameterType="cn.kqk.community_park.bean.UserReview">
+    update user_review
+    set card_url2 = #{cardUrl2,jdbcType=VARCHAR}
+    where user_review_id = #{userReviewId,jdbcType=VARCHAR}
+  </update>
+    <select id="selectTruthNameByUserId" resultMap="BaseResultMap">
+      select truth_name from user_review where applyer=#{applyer};
+    </select>
+    <select id="selectUserReviewInfoByUserId" resultType="cn.kqk.community_park.bean.UserReview">
+      select * from user_review where applyer=#{applyer};
+    </select>
+    <select id="selectUserReviewInfoByNameAndMobile" resultType="cn.kqk.community_park.bean.UserReview">
+      select status from user_review where truth_name=#{truthName} and mobile=#{mobile};
+    </select>
+    <select id="selectStatusByUserId" resultMap="BaseResultMap">
+      select * from user_review where applyer=#{userId};
+    </select>
+    <select id="selectNoIdentify" resultType="int">
+      select count(*) from user_review where status=0;
+    </select>
+    <select id="findUserIndentify" resultType="cn.kqk.community_park.bean.dto.UserIdentifyDTO" parameterType="java.util.List">
+      select user_review_id,truth_name,mobile,identity_card,sex,card_url1,card_url2,status from user_review where applyer!='5c7467961633424aa7c9cbb102153945'
+    </select>
+  <update id="updateStatusByUserReviewIdAndUpdateReviewer">
+    update user_review set status=1,reviewer=#{userId} where user_review_id=#{userReviewId};
+  </update>
+  <select id="selectUserIdByUserReviewId" resultMap="BaseResultMap">
+    select applyer from user_review where user_review_id=#{userReviewId};
+  </select>
+  <select id="selectStatusByUserReviewId" resultMap="BaseResultMap">
+    select status,applyer from user_review where user_review_id=#{userReviewId};
+  </select>
+    <update id="updateStatusByUserUnReviewIdAndUpdateReviewer">
+      update user_review set status=2,reviewer=#{userId} where user_review_id=#{userReviewId};
+    </update>
+    <select id="selectPhotoByuserReviewId" resultType="cn.kqk.community_park.bean.dto.UserIdentifyDTO">
+      select card_url1,card_url2 from user_review where user_review_id=#{userReviewId};
+    </select>
+</mapper>

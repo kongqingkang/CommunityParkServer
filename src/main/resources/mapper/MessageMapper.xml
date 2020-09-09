@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.MessageMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.Message">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table message-->
+    <id column="message_id" jdbcType="VARCHAR" property="messageId" />
+    <result column="send_user_id" jdbcType="VARCHAR" property="sendUserId" />
+    <result column="recipt_user_id" jdbcType="VARCHAR" property="reciptUserId" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="message_type" jdbcType="INTEGER" property="messageType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="read_flag" jdbcType="INTEGER" property="readFlag" />
+  </resultMap>
+
+  <resultMap id="MessageMap" type="cn.kqk.community_park.bean.dto.MessageDTO">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table message-->
+    <result column="truth_name" jdbcType="VARCHAR" property="truthName" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="message_type" jdbcType="INTEGER" property="messageType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="read_flag" jdbcType="INTEGER" property="readFlag" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    message_id, send_user_id, recipt_user_id, content, message_type, create_time, read_flag
+  </sql>
+
+  <update id="ReadFlagUpdateBatch" parameterType="list">
+    <if test="list!=null">
+      <foreach collection="list" item="i" index= "index" open="" close="" separator =";">
+        update message set read_flag=1 where message_id=#{i.messageId}
+      </foreach>
+    </if>
+  </update>
+
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update message
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="send_user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.sendUserId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="recipt_user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.reciptUserId,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.content,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="message_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.messageType,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="read_flag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.readFlag,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+    </trim>
+    where message_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.messageId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    update message
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="send_user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.sendUserId != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.sendUserId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="recipt_user_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.reciptUserId != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.reciptUserId,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="content = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.content != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.content,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="message_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.messageType != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.messageType,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="read_flag = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.readFlag != null">
+            when message_id = #{item.messageId,jdbcType=VARCHAR} then #{item.readFlag,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where message_id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.messageId,jdbcType=VARCHAR}
+    </foreach>
+  </update>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into message
+    (message_id, send_user_id, recipt_user_id, content, message_type, create_time, read_flag
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.messageId,jdbcType=VARCHAR}, #{item.sendUserId,jdbcType=VARCHAR}, #{item.reciptUserId,jdbcType=VARCHAR}, 
+        #{item.content,jdbcType=VARCHAR}, #{item.messageType,jdbcType=INTEGER}, #{item.createTime,jdbcType=TIMESTAMP}, 
+        #{item.readFlag,jdbcType=INTEGER})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.Message">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into message
+    (message_id, send_user_id, recipt_user_id, content, message_type, create_time, read_flag
+      )
+    values
+    (#{messageId,jdbcType=VARCHAR}, #{sendUserId,jdbcType=VARCHAR}, #{reciptUserId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{messageType,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{readFlag,jdbcType=INTEGER})
+    on duplicate key update 
+    message_id = #{messageId,jdbcType=VARCHAR}, 
+    send_user_id = #{sendUserId,jdbcType=VARCHAR}, 
+    recipt_user_id = #{reciptUserId,jdbcType=VARCHAR}, 
+    content = #{content,jdbcType=VARCHAR}, 
+    message_type = #{messageType,jdbcType=INTEGER}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    read_flag = #{readFlag,jdbcType=INTEGER}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.Message">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        message_id,
+      </if>
+      <if test="sendUserId != null">
+        send_user_id,
+      </if>
+      <if test="reciptUserId != null">
+        recipt_user_id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="messageType != null">
+        message_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="readFlag != null">
+        read_flag,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="messageId != null">
+        #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null">
+        #{sendUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="reciptUserId != null">
+        #{reciptUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null">
+        #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readFlag != null">
+        #{readFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="messageId != null">
+        message_id = #{messageId,jdbcType=VARCHAR},
+      </if>
+      <if test="sendUserId != null">
+        send_user_id = #{sendUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="reciptUserId != null">
+        recipt_user_id = #{reciptUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messageType != null">
+        message_type = #{messageType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="readFlag != null">
+        read_flag = #{readFlag,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="getMessageByUserId" resultMap="MessageMap" parameterType="list">
+    select m.create_time,m.content,m.message_type,m.read_flag,ur.truth_name,ui.user_id from message m,user_review ur,user_info ui where m.send_user_id=ur.applyer and ur.applyer=ui.user_id and m.recipt_user_id=#{userId} order by m.create_time desc
+  </select>
+    <select id="selectMessageCountByUserId" resultType="int">
+      select count(*) from message where read_flag=0 and recipt_user_id=#{userId};
+    </select>
+  <select id="selectMessageIdByUserId" resultMap="BaseResultMap">
+    select message_id from message where recipt_user_id=#{userId};
+  </select>
+</mapper>

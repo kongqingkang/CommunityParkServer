@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.kqk.community_park.mapper.RolePermissionMapper">
+  <resultMap id="BaseResultMap" type="cn.kqk.community_park.bean.RolePermission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    <!--@Table role_permission-->
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="permisssion_id" jdbcType="VARCHAR" property="permisssionId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    role_id, permisssion_id
+  </sql>
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into role_permission
+    (role_id, permisssion_id)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.roleId,jdbcType=VARCHAR}, #{item.permisssionId,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" parameterType="cn.kqk.community_park.bean.RolePermission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into role_permission
+    (role_id, permisssion_id)
+    values
+    (#{roleId,jdbcType=VARCHAR}, #{permisssionId,jdbcType=VARCHAR})
+    on duplicate key update 
+    role_id = #{roleId,jdbcType=VARCHAR}, 
+    permisssion_id = #{permisssionId,jdbcType=VARCHAR}
+  </insert>
+  <insert id="insertOrUpdateSelective" parameterType="cn.kqk.community_park.bean.RolePermission">
+    <!--@mbg.generated generated on Fri Apr 10 19:53:42 CST 2020.-->
+    insert into role_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="permisssionId != null">
+        permisssion_id,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="permisssionId != null">
+        #{permisssionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="permisssionId != null">
+        permisssion_id = #{permisssionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
